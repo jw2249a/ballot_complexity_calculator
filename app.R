@@ -20,7 +20,7 @@ possible_orders <- function(ncands, nranks,irv, includeNoVote=T) {
                  factorial(ncands-nranks:1)) + (includeNoVote*1))
   } else {
     return(sum(factorial(ncands)/
-                 (factorial(nranks:1)*factorial(ncands-nranks:1))))
+                 (factorial(nranks:1)*factorial(ncands-nranks:1)))+ (includeNoVote*1))
   }
 }
 
@@ -61,7 +61,7 @@ ballot_wide <- function(main) {
                     nranks=main$choices, 
                     irv=main$isRanked)
   po <- prod(main$po)
-  res <- expected_unique(po, voters = main$voters[1],coverage = T)
+  res <- expected_unique(po, voters = main$numvoters[1],coverage = T)
   return(c(format(po, digits=0, big.mark = ",", big.interval = 3), percent(res, digits = 2)))
 }
 
@@ -188,6 +188,15 @@ server <- function(input, output) {
 
   output$show_result <- renderPrint({
     x <- format_frame(main)
+    print(paste("Possible orders for this ballot:",
+      ballot_wide(main)[1]))
+    
+    print("")  
+    print(paste("Expected coverage of possible orders(maximum entropy):",
+                ballot_wide(main)[2]))
+    print("")
+    print("Contests with the lowest expected coverage:")
+    
     str(x)
   }) |> bindEvent(input$submit2)
   
