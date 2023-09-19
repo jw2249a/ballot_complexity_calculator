@@ -92,6 +92,9 @@ ui <- fluidPage(theme = shinytheme("readable"),
                  checkboxInput(inputId = "isRanked",
                                label = "Is this contest ranked?",
                                value = FALSE),
+                 numericInput(inputId = "voters",
+                   label = "Expected number of voters",
+                   value = 100),
                  actionButton("submit", "Add Contest", class = "btn-primary"),
                  br()),
         # tab for uploading entire file at once
@@ -107,11 +110,9 @@ ui <- fluidPage(theme = shinytheme("readable"),
       ),
  
       br(),
-      br(),
+      br()
       
-      numericInput(inputId = "voters",
-                   label = "Expected number of voters",
-                   value = 100),
+      
             ),
 
       actionButton("submit2", "Get Ballot Complexity", class = "btn-primary",width = "100%")
