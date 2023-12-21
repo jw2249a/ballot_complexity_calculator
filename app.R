@@ -30,7 +30,7 @@ expected_unique <- function(po, voters, coverage=F) {
   if (coverage) {
     return((1-(1-1/po)^voters))
   } else {
-    return((1-(1-1/po)^voters)*voters)
+    return((1-(1-1/po)^voters)*po)
   }
 }
 
