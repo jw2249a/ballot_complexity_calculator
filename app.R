@@ -44,10 +44,10 @@ format_frame <- function(main) {
   
   main$expected.coverage <- expected_unique(main$po, main$numvoters, T)
   main <- main[order(main$po, decreasing=T),]
-  main$expected.unique <- trimws(format(main$po -  main$expected.coverage*main$po,digits = 0,big.mark = ",", big.interval = 3))
+  main$expected.unique <- expected_unique(main$po, main$numvoters, F)
   
   main$expected.coverage <- percent(main$expected.coverage, digits=0)
-  main$po <- trimws(format(main$po,digits = 0,big.mark = ",", big.interval = 3))
+  main$po <- trimws(format(main$po,digits = 1,big.mark = ",", big.interval = 3))
   
   names(main) <- c("Candidates", "Vote For", "Ranked Contest", "Num Voters", "Possible Orders", "E[Coverage]", "E[Unique Votes]")
   return(main)  
@@ -62,7 +62,7 @@ ballot_wide <- function(main) {
                     irv=main$isRanked)
   po <- prod(main$po)
   res <- expected_unique(po, voters = main$numvoters[1],coverage = T)
-  return(c(format(po, digits=0, big.mark = ",", big.interval = 3), percent(res, digits = 2)))
+  return(c(format(po, digits=1, big.mark = ",", big.interval = 3), percent(res, digits = 2)))
 }
 
 
